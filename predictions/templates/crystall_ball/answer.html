@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+  {% block title %}
+    Ответ
+  {%  endblock %}
+  {% block content %}
+    <div class='center' style="display:flex">
+
+      <div class="ask-more col-8">
+      <p>
+        <img src="{% static 'img/answer.jpg' %}" width="300" height="450" style="border-radius: 10px;">
+      </p>
+      <p>Вопрос: {{ question.text }}</p>
+      <p>Ответ: {{ answer }}</p>
+      <p>Количество подобных вопросов за все время: {{ count_q }}</p>
+      <a class="btn btn-primary" href="{% url 'crystal_ball:question' %}">
+        Задать еще вопрос
+      </a>
+    </div>
+    <div class="card col-3">
+      <h4 class="card-header">Ваши последние вопросы</h4>
+      {% for question in all_questions %}
+        <p class="card-body">
+          <div class="card-text bg-primary mb-3" >
+            {{ question.text }}
+          </div>
+        </p>
+      {% endfor %}
+      <p>
+        <a class="btn btn-primary" href="{% url 'crystal_ball:all_questions'  id=request.user.id%}">
+          Смотреть все
+        </a>
+      </p>
+    </div>
+  </div>
+{% endblock %}
