@@ -1,0 +1,23 @@
+{% load static %}
+  <header style="margin-bottom:10px;">
+  <nav class="navbar navbar-light" style="background-color: black; height: 70px;">
+    <div class="container">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'crystal_ball:answer' %}active{% endif %}"
+             href="{% url 'crystal_ball:question' %}">Задать вопрос</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'crystal_ball:all_questions' %}active{% endif %}"
+             href="{% url 'crystal_ball:all_questions' id=request.user.id %}">Все вопросы</a>
+        </li>
+      </ul>
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'users:logout' %}">Выйти</a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+</header>
