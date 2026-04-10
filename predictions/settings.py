@@ -1,4 +1,5 @@
 import os
+
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -58,7 +59,7 @@ WSGI_APPLICATION = "predictions.wsgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE', default="django.db.backends.postgresq"),
+        'ENGINE': os.getenv('DB_ENGINE', default="django.db.backends.postgresql"),
         'NAME': os.getenv('DB_NAME', default="postgres"),
         'USER': os.getenv('POSTGRES_USER',  default="postgres"),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', default="postgres"),
@@ -67,6 +68,64 @@ DATABASES = {
     }
 }
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+
+    'handlers': {
+        # Обработчик для файла с общими логами
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'django_debug.log',
+            'formatter': 'verbose',
+        },
+        # Обработчик для файла только с ошибками
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'django_errors.log',
+            'formatter': 'verbose',
+        },
+        # Обработчик для консоли
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+            'level': 'INFO',
+        },
+    },
+
+    'loggers': {
+        # Логгер для вашего приложения
+        'crystall_ball': {
+            'handlers': ['console', 'file', 'error_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        # Настройка стандартных логгеров Django
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['error_file'], # Логи ошибок запросов (4xx, 5xx) будут в отдельный файл
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -108,3 +167,4 @@ INTERNAL_IPS = [
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+CARD_IMAGES = 'GigaChat '

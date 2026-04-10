@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from .forms import QuestionForm
-from .models import Answer, Question
+from .models import Answer, Question, Cards
+from log import log
 
 
 @login_required
@@ -23,7 +24,7 @@ def crystal_ball(request):
         return redirect('crystal_ball:answer', request.user.id)
     template = 'crystall_ball/question.html'
     context = {
-        'form': form,
+        'form': form
     }
     return render(request, template, context)
 
@@ -33,17 +34,21 @@ def answer(request, id):
     Передает данные о всех вопросах пользователя,
     количестве аналогичных вопросов и список последних 10
     вопросов текущего пользователя"""
+
     all_questions = Question.objects.filter(user_id=request.user)[:10]
     current_question = Question.objects.filter(user_id=request.user).last()
     count_current_q = Question.objects.filter(text=current_question.text).count()
     if request.user.id == id:
-        answers = Answer.objects.all()
-        answer = random.choice(answers)
+        all_cards = Cards.objects.all()
+        cards = random.sample(list(all_cards), 3)
+        log.info(f'CARDS ANSWERS: {cards}')
+
         context = {
             'all_questions': all_questions,
-            'answer': answer,
+            'answer': answer or None,
             'question': current_question,
-            'count_q': count_current_q
+            'count_q': count_current_q,
+            'cards': cards
         }
         return render(request, 'crystall_ball/answer.html', context)
     return redirect('crystal_ball:question')

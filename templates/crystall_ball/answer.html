@@ -11,6 +11,14 @@
         <img src="{% static 'img/answer.jpg' %}" width="300" height="450" style="border-radius: 10px;">
       </p>
       <p>Вопрос: {{ question.text }}</p>
+      <div class="card-container">
+        {% for card in cards %}
+          <div class="card-item" style="width: 300px; background-color: #ffffff; display: inline-block;">
+            <img class="question" src="{{ card.image.url }}">
+            <p class="cards center">{{ card.name }}</p>
+          </div>
+        {% endfor %}
+      </div>
       <p>Ответ: {{ answer }}</p>
       <p>Количество подобных вопросов за все время: {{ count_q }}</p>
       <a class="btn btn-primary" href="{% url 'crystal_ball:question' %}">

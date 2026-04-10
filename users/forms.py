@@ -7,4 +7,3 @@ class MyUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['name', 'password']
-
