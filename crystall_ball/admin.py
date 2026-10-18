@@ -3,11 +3,20 @@ from django.utils.html import format_html
 
 from crystall_ball.models import Answer, Question, Cards
 
-admin.site.register(Answer)
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ('question', 'text_preview')
+    readonly_fields = ('text',)
+
+    def text_preview(self, obj):
+        return obj.text[:100]
+    text_preview.short_description = 'Текст (превью)'
+
+
 admin.site.register(Question)
 
 @admin.register(Cards)
-class ProfileAdmin(admin.ModelAdmin):
+class CardsAdmin(admin.ModelAdmin):
     readonly_fields = [
         'image_card_preview'
     ]
@@ -21,7 +30,8 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'position',
-        'number_of_card'
+        'number_of_card',
+        'image_card_preview''
     )
 
     def image_card_preview(self, obj):

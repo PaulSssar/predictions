@@ -1,17 +1,23 @@
 from django.db import models
+from .question import Question
 
 
 class Answer(models.Model):
-    """Поле ответов.Используется для хранения вариантов ответа с
-    возможностью дальнейшего увеличения количества вариантов
-    через админ-панель"""
-    text = models.CharField(
+    """Ответ на гадание. Хранит интерпретацию, сгенерированную GigaChat."""
+    question = models.ForeignKey(
+        Question,
+        verbose_name='Вопрос',
+        on_delete=models.CASCADE,
+        related_name='answers',
+        null=True,
+        blank=True,
+    )
+    text = models.TextField(
         'Ответ',
-        max_length=255
     )
 
     def __str__(self):
-        return self.text[:15]
+        return self.text[:50]
 
     class Meta:
         verbose_name = 'Ответ'
