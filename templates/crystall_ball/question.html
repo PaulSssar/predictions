@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+  {% block title %}
+    Шар предсказаний
+  {%  endblock %}
+  {% block content %}
+    <div class="form-group row my-3 p-3 center">
+    <form method="post" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+      <ul>
+        <li>
+          <img src="{% static 'img/question.jpg' %}" width="300" height="450" style="border-radius: 10px;">
+        </li>
+        <li>
+          <h3>Задать вопрос</h3>
+        </li>
+        <li>
+          {{ form.text }}
+        </li>
+        <li class="padding">
+          <button type="submit" class="btn btn-primary">
+            Получить ответ
+          </button>
+        </li>
+      </ul>
+    </div>
+  {%  endblock %}
