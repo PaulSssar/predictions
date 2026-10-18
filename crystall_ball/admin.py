@@ -31,7 +31,7 @@ class CardsAdmin(admin.ModelAdmin):
         'name',
         'position',
         'number_of_card',
-        'image_card_preview''
+        'image_card_preview'
     )
 
     def image_card_preview(self, obj):
