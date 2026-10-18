@@ -1,6 +1,7 @@
 import os
 import logging
 
+from django.conf import settings
 from gigachat import GigaChat
 
 from log import log
@@ -24,12 +25,13 @@ def get_tarot_interpretation(card_names: list) -> str:
 
     try:
         with GigaChat(
-            username=os.getenv('GIGACHAT_LOGIN'),
-            password=os.getenv('GIGACHAT_PASSWORD'),
+            credentials=os.getenv('GIGACHAT_KEY'), # Ключ авторизации из личного кабинета
             scope='GIGACHAT_API_PERS',
+            model="GigaChat-2",
+            verify_ssl_certs=False#settings.DEBUG,
         ) as gigachat:
             response = gigachat.chat(prompt)
-            interpretation = response.messages[0].content.strip()
+            interpretation = response.choices[0].message.content
             logger.info(f"GigaChat response: {interpretation}")
             return interpretation
     except Exception as e:
