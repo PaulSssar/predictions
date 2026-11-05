@@ -11,3 +11,6 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='users/login.html'),
          name='login'),
 ]
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/logged_out/'

@@ -142,6 +142,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/logged_out/'
+LOGIN_URL = '/accounts/login/'
+
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'srv', 'predictions', 'public',  'static')

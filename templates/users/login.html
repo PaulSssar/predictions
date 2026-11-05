@@ -1,91 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Вход в учетную запись</title>
-    <style>
-        body {
-            background-color: #E6F0FF;
-            font-family: Arial, sans-serif;
-            color: #333333;
-        }
+{% extends 'users/auth_base.html' %}
+{% load static %}
 
-        .container {
-            width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #FFFFFF;
-            border: 1px solid #CCCCCC;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+{% block title %}Вход{% endblock %}
 
-        h1 {
-            text-align: center;
-            color: #0099CC;
-        }
+{% block content %}
+<h1 class="auth-title">✦ Вход в шар предсказаний ✦</h1>
+<p class="auth-subtitle">Загляни в тайны судьбы</p>
 
-        p {
-            text-align: center;
-        }
+{% if form.errors %}
+<div class="auth-alert">
+    Неверное имя пользователя или пароль. Попробуйте снова.
+</div>
+{% endif %}
 
-        a {
-            color: #0099CC;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .form-group input {
-            width: 98%;
-            padding: 10px;
-            border-radius: 3px;
-            border: 1px solid #CCCCCC;
-        }
-
-        .form-group input[type="submit"] {
-            background-color: #0099CC;
-            color: #FFFFFF;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        .form-group input[type="submit"]:hover {
-            background-color: #009900;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Вход в учетную запись</h1>
-        <p>Пожалуйста, введите свои данные для входа.</p>
-        <form method="post" action="" enctype="multipart/form-data">
-          {% csrf_token %}
-            <div class="form-group">
-                <label for="username">Имя пользователя:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Пароль:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Войти">
-            </div>
-            <div class="form-group">
-              <p>Нет аккаунта? <a href="{% url 'users:sign_up' %}">Зарегистрируйтесь</a></p>
-            </div>
-        </form>
+<form method="post" action="">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_username">Имя пользователя</label>
+        <input type="text" name="username" id="id_username" class="auth-input" placeholder="Введите имя" required autofocus>
     </div>
-</body>
-</html>
+    <div class="form-group">
+        <label for="id_password">Пароль</label>
+        <input type="password" name="password" id="id_password" class="auth-input" placeholder="Введите пароль" required>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="auth-btn">
+            <span class="btn-icon">🔮</span> Войти
+        </button>
+    </div>
+    <p class="auth-link">Нет аккаунта? <a href="{% url 'users:sign_up' %}">Зарегистрируйтесь</a></p>
+</form>
+{% endblock %}
