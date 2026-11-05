@@ -13,7 +13,12 @@ class AnswerAdmin(admin.ModelAdmin):
     text_preview.short_description = 'Текст (превью)'
 
 
-admin.site.register(Question)
+class AnswerInline(admin.TabularInline):
+    model = Answer
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    inlines = [AnswerInline, ]
 
 @admin.register(Cards)
 class CardsAdmin(admin.ModelAdmin):

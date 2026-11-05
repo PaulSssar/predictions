@@ -18,11 +18,11 @@
     </title>
   </head>
     {% include 'includes/header.html' %}
-    <body style="background-color: rgba(75, 0, 130, 0.8)">
-      <main>
+    <body>
+      <div class="main-content">
          {% block content %}
          {% endblock %}
-      </main>
+      </div>
     {% include 'includes/footer.html' %}
     </body>
 </html>

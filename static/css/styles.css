@@ -1,10 +1,13 @@
 /* ==================== Базовые стили ==================== */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
     background: linear-gradient(135deg, #0d0f14 0%, #151821 50%, #1a1035 100%);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #e0d8f0;
-    min-height: 100vh;
-    margin: 0;
     display: flex;
     flex-direction: column;
 }
@@ -246,15 +249,17 @@ input[type="password"]::placeholder {
     display: flex;
     flex-direction: row;
     gap: 20px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
+    overflow-x: auto;
+    padding: 10px 0;
 }
 
 .card-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 300px;
+    width: 220px;
     background: linear-gradient(145deg, rgba(21, 24, 33, 0.9), rgba(26, 16, 53, 0.9));
     border: 1px solid rgba(138, 43, 226, 0.3);
     border-radius: 12px;
@@ -271,8 +276,8 @@ input[type="password"]::placeholder {
 }
 
 img.question {
-    width: 300px;
-    height: 450px;
+    width: 220px;
+    height: 330px;
     object-fit: cover;
     border-radius: 8px;
     border: 2px solid rgba(138, 43, 226, 0.4);
@@ -283,10 +288,10 @@ p.cards {
     width: 100%;
     text-align: center;
     color: #e8c39e;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    margin-top: 12px;
-    padding-top: 12px;
+    margin-top: 10px;
+    padding-top: 10px;
     border-top: 1px solid rgba(138, 43, 226, 0.2);
 }
 
@@ -337,6 +342,118 @@ a:hover {
     }
 }
 
+/* ==================== Страница ответа ==================== */
+.answer-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 30px 20px;
+}
+
+.answer-content {
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+}
+
+/* ==================== Markdown рендеринг ==================== */
+.answer-text {
+    background: linear-gradient(145deg, rgba(21, 24, 33, 0.9), rgba(26, 16, 53, 0.9));
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px 0;
+    line-height: 1.8;
+    color: #e0d8f0;
+}
+
+.answer-text h1, .answer-text h2, .answer-text h3, .answer-text h4, .answer-text h5, .answer-text h6 {
+    color: #e8c39e;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(232, 195, 158, 0.2);
+}
+
+.answer-text h1 { font-size: 1.6rem; }
+.answer-text h2 { font-size: 1.4rem; }
+.answer-text h3 { font-size: 1.2rem; }
+
+.answer-text p {
+    margin-bottom: 12px;
+    color: #c8bcd8;
+}
+
+.answer-text strong {
+    color: #e8c39e;
+    font-weight: 600;
+}
+
+.answer-text em {
+    color: #d0c0e8;
+    font-style: italic;
+}
+
+.answer-text ul, .answer-text ol {
+    margin: 12px 0;
+    padding-left: 25px;
+    color: #c8bcd8;
+}
+
+.answer-text li {
+    margin-bottom: 6px;
+}
+
+.answer-text code {
+    background: rgba(13, 15, 20, 0.6);
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #c8a0ff;
+}
+
+.answer-text pre {
+    background: rgba(13, 15, 20, 0.8);
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 8px;
+    padding: 15px;
+    overflow-x: auto;
+    margin: 15px 0;
+}
+
+.answer-text pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #e0d8f0;
+}
+
+.answer-text blockquote {
+    border-left: 3px solid rgba(138, 43, 226, 0.5);
+    margin: 15px 0;
+    padding: 10px 20px;
+    background: rgba(138, 43, 226, 0.05);
+    border-radius: 0 8px 8px 0;
+    color: #a89cc8;
+}
+
+.answer-text a {
+    color: #c8a0ff;
+    text-decoration: underline;
+}
+
+.answer-text a:hover {
+    color: #e0c0ff;
+}
+
+.answer-text hr {
+    border: none;
+    border-top: 1px solid rgba(138, 43, 226, 0.3);
+    margin: 20px 0;
+}
+
 /* ==================== Утилиты ==================== */
 .center {
     text-align: center;
@@ -355,6 +472,35 @@ a:hover {
     background-color: #4B0082;
 }
 
+/* ==================== Страница вопроса ==================== */
+.question-btn-wrapper {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.question-btn-wrapper .btn {
+    width: 100%;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #4B0082, #6A0DAD);
+    color: #e0d8f0;
+    border: 1px solid rgba(138, 43, 226, 0.4);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(75, 0, 130, 0.3);
+}
+
+.question-btn-wrapper .btn:hover {
+    background: linear-gradient(135deg, #5A0094, #7B14C4);
+    box-shadow:
+        0 6px 20px rgba(138, 43, 226, 0.4),
+        0 0 30px rgba(138, 43, 226, 0.2);
+    transform: translateY(-2px);
+}
+
 .text-danger {
     color: #e06070;
 }
@@ -364,6 +510,27 @@ a:hover {
     border-radius: 8px;
     padding: 10px;
     margin-bottom: 10px;
+}
+
+/* ==================== Sticky Footer ==================== */
+.main-content {
+    flex: 1 0 auto;
+    width: 100%;
+}
+
+/* ==================== Футер ==================== */
+footer {
+    flex-shrink: 0;
+    padding: 20px;
+    text-align: center;
+    color: #6a5f85;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(138, 43, 226, 0.2);
+    background: rgba(13, 15, 20, 0.8);
+}
+
+footer .footer-copyright {
+    text-align: center;
 }
 
 /* ==================== Навигация ==================== */
@@ -380,14 +547,4 @@ a:hover {
 
 .navbar .nav-link:hover {
     color: #e8c39e !important;
-}
-
-/* ==================== Футер ==================== */
-footer {
-    margin-top: auto;
-    padding: 20px;
-    text-align: center;
-    color: #6a5f85;
-    font-size: 0.85rem;
-    border-top: 1px solid rgba(138, 43, 226, 0.2);
 }

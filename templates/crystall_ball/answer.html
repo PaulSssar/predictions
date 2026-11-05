@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load markdown_filter %}
   {% block title %}
     Ответ
   {%  endblock %}
   {% block content %}
-    <div class='center' style="display:flex">
+    <div class="answer-page">
 
-      <div class="ask-more col-8">
+      <div class="ask-more answer-content">
       <p>
         <img src="{% static 'img/answer.jpg' %}" width="300" height="450" style="border-radius: 10px;">
       </p>
@@ -22,8 +23,8 @@
       {% if error %}
         <p class="text-danger">{{ error }}</p>
       {% else %}
-        <p>Ответ: {{ answer }}</p>
-      {% endif %}
+        <div class="answer-text">{{ answer|render_markdown }}</div>
+<!--      {% endif %}
       <p>Количество подобных вопросов за все время: {{ count_q }}</p>
       <a class="btn btn-primary" href="{% url 'crystal_ball:question' %}">
         Задать еще вопрос
@@ -43,6 +44,6 @@
           Смотреть все
         </a>
       </p>
-    </div>
+    </div>-->
   </div>
 {% endblock %}

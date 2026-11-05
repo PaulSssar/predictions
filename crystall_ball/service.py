@@ -37,6 +37,7 @@ def _get_gigachat_client() -> GigaChat:
         scope='GIGACHAT_API_PERS',
         model='GigaChat-2',
         verify_ssl_certs=False,
+        response_format={"type": "text"},
     )
 
 
@@ -64,7 +65,9 @@ def _generate_interpretation(
         try:
             client = _get_gigachat_client()
             response = client.chat(prompt)
+            logger.info(response, request_id)
             interpretation = response.choices[0].message.content.strip()
+            logger.info(interpretation, request_id)
             logger.info(
                 "gigachat_ok",
                 extra={"request_id": request_id, "text_length": len(interpretation)},
