@@ -6,10 +6,10 @@ from uuid import uuid4
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import QuestionForm
-from .models import Answer, Question, Cards
+from .models import Answer, Question, Cards, CategoryDeck
 from .service import (
     create_reading,
     GigaChatBadResponse,
@@ -21,10 +21,22 @@ logger = logging.getLogger(__name__)
 
 
 @login_required
-def crystal_ball(request):
+def index(request):
+    """Главная страница — выбор колоды."""
+    decks = CategoryDeck.objects.all()
+    context = {'decks': decks, 'view_name': 'crystal_ball:index'}
+    return render(request, 'crystall_ball/index.html', context)
+
+
+@login_required
+def crystal_ball(request, deck_slug=None):
     """View-функция для страницы вопроса.
     Передает форму при GET-запросе. При POST-запросе
     сохраняет вопрос и перенаправляет на страницу с ответом."""
+    deck = None
+    if deck_slug:
+        deck = get_object_or_404(CategoryDeck, slug=deck_slug)
+
     form = QuestionForm(request.POST or None)
     if form.is_valid():
         text = form.cleaned_data['text']
@@ -37,6 +49,8 @@ def crystal_ball(request):
     template = 'crystall_ball/question.html'
     context = {
         'form': form,
+        'deck': deck,
+        'view_name': 'crystal_ball:question',
     }
     return render(request, template, context)
 
@@ -53,12 +67,12 @@ def answer(request, id):
     current_question = Question.objects.filter(user_id=request.user).last()
 
     if not current_question:
-        return redirect('crystal_ball:question')
+        return redirect('crystal_ball:index')
 
     count_current_q = Question.objects.filter(text=current_question.text).count()
 
     if request.user.id != id:
-        return redirect('crystal_ball:question')
+        return redirect('crystal_ball:index')
 
     all_cards = Cards.objects.all()
     cards = random.sample(list(all_cards), 3)
@@ -89,6 +103,7 @@ def answer(request, id):
                 'count_q': count_current_q,
                 'cards': cards,
                 'error': 'Не дождались ответа. Попробуйте позже.',
+                'view_name': 'crystal_ball:answer',
             },
             status=504,
         )
@@ -106,6 +121,7 @@ def answer(request, id):
                 'count_q': count_current_q,
                 'cards': cards,
                 'error': 'Сейчас не получается заглянуть в карты. Попробуйте позже.',
+                'view_name': 'crystal_ball:answer',
             },
             status=503,
         )
@@ -123,6 +139,7 @@ def answer(request, id):
                 'count_q': count_current_q,
                 'cards': cards,
                 'error': 'Сейчас не получается заглянуть в карты. Попробуйте позже.',
+                'view_name': 'crystal_ball:answer',
             },
             status=502,
         )
@@ -144,6 +161,7 @@ def answer(request, id):
         'question': current_question,
         'count_q': count_current_q,
         'cards': cards,
+        'view_name': 'crystal_ball:answer',
     }
     return render(request, 'crystall_ball/answer.html', context)
 
@@ -154,6 +172,7 @@ def all_questions(request, id):
     all_questions = Question.objects.filter(user=request.user)
     context = {
         'all_questions': all_questions,
+        'view_name': 'crystal_ball:all_questions',
     }
     template = 'crystall_ball/all_questions.html'
     return render(request, template, context)

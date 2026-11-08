@@ -1,34 +1,33 @@
 # AGENTS.md
 
 ## Project overview
-Сервис таро: Django-сайт + Telegram-бот (aiogram). Пользователь задаёт вопрос, получает расклад из 3 карт и AI-интерпретацию через GigaChat. Общая бизнес-логика — в `crystall_ball/service.py`, её вызывают и сайт, и бот. Стек: Python 3.12, Django 4.2.5, aiogram 3, PostgreSQL, GigaChat API. Сайт — на Django-шаблонах; DRF не используется.
+Сервис таро: Django-сайт. Пользователь задаёт вопрос, получает расклад из 3 карт и AI-интерпретацию через GigaChat. Бизнес-логика — в `crystall_ball/services/`. Стек: Python 3.12, Django 4.2.5, PostgreSQL, GigaChat API. Сайт — на Django-шаблонах; DRF не используется. Telegram-бот (`bot/`) — в планах, пока не создан.
 
 Текущая структура:
 ```
-crystall_ball/          # Django-приложение: models, views, service.py, admin
-users/                  # Django-приложение: пользователи/auth/профиль (уже есть)
+crystall_ball/          # Django-приложение: models, views, services/, templatetags, admin
+users/                  # Django-приложение: пользователи/auth
 predictions/            # настройки проекта (Django settings)
 templates/              # HTML-шаблоны
 static/                 # CSS/JS/шрифты
 bot/                    # НЕТ — создать для aiogram (entrypoint bot/main.py)
 ```
-`users/` и `bot/` — разные вещи. `users/` — Django-app. `bot/` — отдельный пакет с aiogram-кодом, его нужно создать.
 
 ## Setup & commands
 - Install: `pip install -r requirements.txt`
 - Env: создать `.env` вручную. Заполнить `GIGACHAT_KEY` (токен из личного кабинета), `DATABASE_URL`.
 - Migrations: `python manage.py migrate`. `python manage.py makemigrations` — **только** при изменении моделей. Сгенерированные файлы вручную не редактировать.
 - Run site: `python manage.py runserver`
-- Run bot: `python -m bot.main`
+- Run bot: `python -m bot.main` (когда будет создан)
 - Run tests: **`python manage.py test`** (тестов пока нет; 0 тестов — валидный прогон, не ошибка).
 - One test (когда появится): `python manage.py test crystall_ball.tests.test_service.ServiceTest.test_create` — пример, подставь актуальный путь.
 - Lint/format/typecheck: **`ruff` и `mypy` в проекте пока не настроены**, `pyproject.toml` отсутствует. См. Quality gates.
 
 ## Architecture & conventions
-- Слои: `crystall_ball/models.py` → `crystall_ball/service.py` → `crystall_ball/views.py` / `bot/`.
-- **Вся бизнес-логика — в `crystall_ball/service.py`.** Никакой логики расклада, выбора карт и вызова GigaChat в views или хендлерах бота.
-- Если `service.py` вырастет (> ~500 строк) — разбей на пакет `crystall_ball/services/` с сохранением публичных имён. **Не делай этого заранее.**
-- Бот (`bot/`) и сайт (`crystall_ball/views.py`) вызывают **одни и те же функции** из `crystall_ball/service.py`. Не дублируй.
+- Слои: `crystall_ball/models/` → `crystall_ball/services/` → `crystall_ball/views.py`.
+- **Вся бизнес-логика — в `crystall_ball/services/`.** Никакой логики расклада, выбора карт и вызова GigaChat в views.
+- `crystall_ball/services/` — пакет с модулями. Абстрактный базовый класс `ChatClient` в `crystall_ball/services/abstract/`.
+- Бот (`bot/`) и сайт (`crystall_ball/views.py`) вызывают **одни и те же функции** из `crystall_ball/services/`. Не дублируй.
 - `users/` — Django-приложение для пользователей/auth. Маппинг `telegram_id → User` — здесь (профиль/identity с `telegram_id: int unique`), **не в `auth.User`**.
 - `bot/` — создать. Внутри: `bot/main.py` (entrypoint), при необходимости `bot/handlers/`. Не смешивать с `users/`.
 - Результат сервиса — dataclass (Pydantic в проекте пока не используется). Не возвращать raw `dict`.
@@ -42,7 +41,7 @@ bot/                    # НЕТ — создать для aiogram (entrypoint b
 ### Контракт «пользователь» для сервисов
 Сайт и бот не передают в один и тот же сервис то `User`, то `int`. Есть два входа, оба ведут к одной приватной функции:
 ```python
-# crystall_ball/service.py
+# crystall_ball/services/reading.py
 from dataclasses import dataclass
 
 from django.contrib.auth.models import User
@@ -78,10 +77,10 @@ def create_reading_by_telegram(
   - Telegram считает длину в UTF-16 code units, Python `len` — code points; для emoji-heavy текста оставляй запас.
 
 ### GigaChat
-- Клиент — `crystall_ball/service.py` (пока в одном файле; при росте вынести в `crystall_ball/gigachat_client.py`).
+- Клиент — `crystall_ball/services/gigachat_client.py` (наследуется от `ChatClient` из `crystall_ball/services/abstract/chat_client.py`).
 - Обязательны: `timeout` (30 с по умолчанию), `retries` (2 для 5xx и сетевых ошибок), экспоненциальная пауза, кэширование access-токена до истечения.
 - 429 от GigaChat — **не ретраить** (пробрасывать сразу как `GigaChatBadResponse`), иначе легко получить бан по квоте. Если политика поменяется — обнови этот раздел.
-- Доменные исключения — в `crystall_ball/service.py` (или `crystall_ball/errors.py`, если станет много). Иерархия: `GigaChatTimeout(GigaChatUnavailable)` и `GigaChatBadResponse(GigaChatUnavailable)`. Ловить от частного к общему (`Timeout`/`BadResponse` → `Unavailable`).
+- Доменные исключения — в `crystall_ball/services/`. Иерархия: `GigaChatTimeout(GigaChatUnavailable)` и `GigaChatBadResponse(GigaChatUnavailable)`. Ловить от частного к общему (`Timeout`/`BadResponse` → `Unavailable`).
 
 | Условие | Исключение | HTTP (JSON) |
 |---|---|---|
@@ -156,7 +155,7 @@ pip install ruff mypy django-stubs
 
 Если что-то упало — чини, не сдавай. `ruff format .` (без `--check`) в гейте не использовать.
 
-- Новая логика в `crystall_ball/service.py` требует теста в `crystall_ball/tests/` (создать каталог вместе с первым тестом).
+- Новая логика в `crystall_ball/services/` требует теста в `crystall_ball/tests/` (создать каталог вместе с первым тестом).
 - Тесты не должны ходить в сеть: GigaChat и Telegram-API мокаются.
 - Вызов GigaChat — всегда с таймаутом, retry и обработкой ошибок (см. раздел GigaChat).
 - Не менять бизнес-логику ради красоты.
@@ -165,9 +164,9 @@ pip install ruff mypy django-stubs
 ## Definition of Done
 Задача считается завершённой, когда:
 - доступные пункты Quality gates зелёные (и явно указано, какие инструменты отсутствуют);
-- для новой логики в `crystall_ball/service.py` есть тест;
+- для новой логики в `crystall_ball/services/` есть тест;
 - примеры кода в этом файле не противоречат правилам (битый пример в `AGENTS.md` — тоже баг);
-- в ответе перечислены изменённые файлы, прогнанные команды и что осталось за рамками.
+- в ответе перечислены изменённые файлы, прогнанные команды и что осталось за рамками (если осталось).
 
 ## Do not touch
 - `crystall_ball/migrations/`, `users/migrations/` — только через `makemigrations`; не редактировать и не удалять вручную.
@@ -199,8 +198,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render
 
-from crystall_ball import service
-from crystall_ball.service import (
+from crystall_ball.services import reading
+from crystall_ball.services.errors import (
     GigaChatBadResponse,
     GigaChatTimeout,
     GigaChatUnavailable,
@@ -225,7 +224,7 @@ def reading_view(request):
         )
 
     try:
-        result = service.create_reading(
+        result = reading.create_reading(
             user=cast(User, request.user),
             question=question,
             request_id=request_id,
@@ -291,7 +290,7 @@ def reading_api(request):
             status=400,
         )
     try:
-        result = service.create_reading(
+        result = reading.create_reading(
             user=cast(User, request.user),
             question=question,
         )
@@ -335,8 +334,8 @@ django.setup()
 
 from django.db import close_old_connections  # noqa: E402
 
-from crystall_ball import service  # noqa: E402
-from crystall_ball.service import (  # noqa: E402
+from crystall_ball.services import reading  # noqa: E402
+from crystall_ball.services.errors import (  # noqa: E402
     GigaChatBadResponse,
     GigaChatTimeout,
     GigaChatUnavailable,
@@ -365,7 +364,7 @@ async def reading_handler(message: Message, command: CommandObject) -> None:
 
     request_id = uuid4().hex
     try:
-        result = await sync_to_async(service.create_reading_by_telegram)(
+        result = await sync_to_async(reading.create_reading_by_telegram)(
             telegram_id=message.from_user.id,
             question=question,
             request_id=request_id,
