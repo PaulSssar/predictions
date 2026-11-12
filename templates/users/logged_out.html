@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {% extends 'users/login.html' %}
 {% load static %}
 
@@ -14,20 +13,3 @@
     <span class="btn-icon">🔮</span> Вернуться к предсказаниям
 </a>
 {% endblock %}
-=======
-{% extends 'users/login.html' %}
-{% load static %}
-
-{% block title %}Выход{% endblock %}
-
-{% block content %}
-<h1 class="auth-title">✦ До встречи ✦</h1>
-<p class="auth-subtitle">Карты ждут вашего возвращения</p>
-
-<p>Вы успешно вышли из учетной записи.</p>
-
-<a href="{% url 'crystal_ball:index' %}" class="auth-btn">
-    <span class="btn-icon">🔮</span> Вернуться к предсказаниям
-</a>
-{% endblock %}
->>>>>>> 235e838110e4665b69016b4322617eccf9d9eff6

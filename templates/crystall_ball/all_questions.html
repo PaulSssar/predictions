@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {% extends 'base.html' %}
   {% block content %}
   <div class="center">
@@ -12,19 +11,4 @@
       </a>
     </div>
   </div>
-=======
-{% extends 'base.html' %}
-  {% block content %}
-  <div class="center">
-    <h3 class="card-head">Все ваши вопросы:</h3>
-    <div class="card-body">
-      {% for question in all_questions %}
-        <p>{{ question.text }}</p>
-      {% endfor %}
-      <a class="btn btn-primary" href="{% url 'crystal_ball:index' %}">
-        Задать еще вопрос
-      </a>
-    </div>
-  </div>
->>>>>>> 235e838110e4665b69016b4322617eccf9d9eff6
-  {% endblock %}
+{% endblock %}

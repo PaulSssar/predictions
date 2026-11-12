@@ -1,54 +1,3 @@
-<<<<<<< HEAD
-{% extends 'base.html' %}
-{% load static %}
-{% load markdown_filter %}
-  {% block title %}
-    Ответ
-  {%  endblock %}
-  {% block content %}
-    <div class="answer-page">
-
-      <div class="ask-more answer-content">
-      <p>
-        <img src="{% static 'img/answer.jpg' %}" width="300" height="450" style="border-radius: 10px;">
-      </p>
-      <p>Вопрос: {{ question.text }}</p>
-      <div class="card-container">
-        {% for card in cards %}
-          <div class="card-item" style="width: 300px; background-color: #ffffff; display: inline-block;">
-            <img class="question" src="{{ card.image.url }}">
-            <p class="cards center">{{ card.name }}</p>
-          </div>
-        {% endfor %}
-      </div>
-      {% if error %}
-        <p class="text-danger">{{ error }}</p>
-      {% else %}
-        <div class="answer-text">{{ answer|render_markdown }}</div>
-<!--      {% endif %}
-      <p>Количество подобных вопросов за все время: {{ count_q }}</p>
-      <a class="btn btn-primary" href="{% url 'crystal_ball:question' %}">
-        Задать еще вопрос
-      </a>
-    </div>
-    <div class="card col-3">
-      <h4 class="card-header">Ваши последние вопросы</h4>
-      {% for question in all_questions %}
-        <p class="card-body">
-          <div class="card-text bg-primary mb-3" >
-            {{ question.text }}
-          </div>
-        </p>
-      {% endfor %}
-      <p>
-        <a class="btn btn-primary" href="{% url 'crystal_ball:all_questions'  id=request.user.id%}">
-          Смотреть все
-        </a>
-      </p>
-    </div>-->
-  </div>
-{% endblock %}
-=======
 {% extends 'base.html' %}
 {% load static %}
 {% load markdown_filter %}
@@ -79,4 +28,3 @@
     </div>
   </div>
 {% endblock %}
->>>>>>> 235e838110e4665b69016b4322617eccf9d9eff6
