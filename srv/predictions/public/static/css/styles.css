@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ==================== Базовые стили ==================== */
 html, body {
     height: 100%;
@@ -724,3 +725,731 @@ footer .footer-copyright {
 .navbar .nav-link:hover {
     color: #e8c39e !important;
 }
+=======
+/* ==================== Базовые стили ==================== */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: linear-gradient(135deg, #0d0f14 0%, #151821 50%, #1a1035 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #e0d8f0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==================== Звёздный фон ==================== */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(1px 1px at 20px 30px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(1px 1px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
+        radial-gradient(1px 1px at 50px 160px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.2), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(1px 1px at 160px 120px, rgba(255, 255, 255, 0.2), transparent);
+    background-size: 200px 200px;
+    animation: twinkle 4s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+/* ==================== Страницы входа/регистрации ==================== */
+.auth-page {
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-page::before {
+    opacity: 0.7;
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.auth-card {
+    background: linear-gradient(145deg, rgba(21, 24, 33, 0.95), rgba(26, 16, 53, 0.95));
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow:
+        0 8px 32px rgba(138, 43, 226, 0.2),
+        0 0 60px rgba(75, 0, 130, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-title {
+    text-align: center;
+    color: #e8c39e;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(232, 195, 158, 0.3);
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: #a89cc8;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+/* ==================== Формы ==================== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #c8bcd8;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.required {
+    color: #e06070;
+    margin-left: 4px;
+}
+
+.form-text {
+    display: block;
+    margin-top: 6px;
+    color: #8a7fa8;
+    font-size: 0.8rem;
+}
+
+/* ==================== Поля ввода ==================== */
+.auth-input,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(13, 15, 20, 0.6);
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 8px;
+    color: #e0d8f0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.auth-input:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: rgba(138, 43, 226, 0.7);
+    box-shadow:
+        0 0 0 3px rgba(138, 43, 226, 0.15),
+        0 0 20px rgba(138, 43, 226, 0.1);
+    background: rgba(13, 15, 20, 0.8);
+}
+
+.auth-input::placeholder,
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+    color: #6a5f85;
+    font-style: italic;
+}
+
+/* ==================== Кнопки ==================== */
+.auth-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #4B0082, #6A0DAD);
+    color: #e0d8f0;
+    border: 1px solid rgba(138, 43, 226, 0.4);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(75, 0, 130, 0.3);
+}
+
+.auth-btn:hover {
+    background: linear-gradient(135deg, #5A0094, #7B14C4);
+    box-shadow:
+        0 6px 20px rgba(138, 43, 226, 0.4),
+        0 0 30px rgba(138, 43, 226, 0.2);
+    transform: translateY(-2px);
+}
+
+.auth-btn:active {
+    transform: translateY(0);
+}
+
+.btn-icon {
+    font-size: 1.2rem;
+}
+
+/* ==================== Ссылки ==================== */
+.auth-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #a89cc8;
+    font-size: 0.9rem;
+}
+
+.auth-link a {
+    color: #c8a0ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.auth-link a:hover {
+    color: #e0c0ff;
+    border-bottom-color: #c8a0ff;
+}
+
+/* ==================== Алерты ==================== */
+.auth-alert {
+    background: rgba(224, 96, 112, 0.15);
+    border: 1px solid rgba(224, 96, 112, 0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    color: #e0a0a8;
+    font-size: 0.9rem;
+}
+
+/* ==================== Основные страницы ==================== */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ==================== Карты Таро ==================== */
+.card-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+.card-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 220px;
+    background: linear-gradient(145deg, rgba(21, 24, 33, 0.9), rgba(26, 16, 53, 0.9));
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-item:hover {
+    transform: translateY(-5px);
+    box-shadow:
+        0 8px 30px rgba(138, 43, 226, 0.3),
+        0 0 40px rgba(75, 0, 130, 0.2);
+}
+
+img.question {
+    width: 220px;
+    height: 330px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid rgba(138, 43, 226, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+p.cards {
+    width: 100%;
+    text-align: center;
+    color: #e8c39e;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+/* ==================== Текст ==================== */
+h1, h2, h3, h4, h5, h6 {
+    color: #e8c39e;
+    text-shadow: 0 2px 10px rgba(232, 195, 158, 0.2);
+}
+
+p {
+    color: #c8bcd8;
+    line-height: 1.6;
+}
+
+a {
+    color: #c8a0ff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #e0c0ff;
+}
+
+/* ==================== Адаптивность ==================== */
+@media (prefers-reduced-motion: reduce) {
+    body::before,
+    .card-item,
+    .auth-card {
+        animation: none;
+        transition: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .auth-card {
+        padding: 30px 20px;
+    }
+
+    .card-item {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    img.question {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* ==================== Страница ответа ==================== */
+.answer-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 30px 20px;
+}
+
+.answer-content {
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+}
+
+/* ==================== Markdown рендеринг ==================== */
+.answer-text {
+    background: linear-gradient(145deg, rgba(21, 24, 33, 0.9), rgba(26, 16, 53, 0.9));
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px 0;
+    line-height: 1.8;
+    color: #e0d8f0;
+}
+
+.answer-text h1, .answer-text h2, .answer-text h3, .answer-text h4, .answer-text h5, .answer-text h6 {
+    color: #e8c39e;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(232, 195, 158, 0.2);
+}
+
+.answer-text h1 { font-size: 1.6rem; }
+.answer-text h2 { font-size: 1.4rem; }
+.answer-text h3 { font-size: 1.2rem; }
+
+.answer-text p {
+    margin-bottom: 12px;
+    color: #c8bcd8;
+}
+
+.answer-text strong {
+    color: #e8c39e;
+    font-weight: 600;
+}
+
+.answer-text em {
+    color: #d0c0e8;
+    font-style: italic;
+}
+
+.answer-text ul, .answer-text ol {
+    margin: 12px 0;
+    padding-left: 25px;
+    color: #c8bcd8;
+}
+
+.answer-text li {
+    margin-bottom: 6px;
+}
+
+.answer-text code {
+    background: rgba(13, 15, 20, 0.6);
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #c8a0ff;
+}
+
+.answer-text pre {
+    background: rgba(13, 15, 20, 0.8);
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 8px;
+    padding: 15px;
+    overflow-x: auto;
+    margin: 15px 0;
+}
+
+.answer-text pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #e0d8f0;
+}
+
+.answer-text blockquote {
+    border-left: 3px solid rgba(138, 43, 226, 0.5);
+    margin: 15px 0;
+    padding: 10px 20px;
+    background: rgba(138, 43, 226, 0.05);
+    border-radius: 0 8px 8px 0;
+    color: #a89cc8;
+}
+
+.answer-text a {
+    color: #c8a0ff;
+    text-decoration: underline;
+}
+
+.answer-text a:hover {
+    color: #e0c0ff;
+}
+
+.answer-text hr {
+    border: none;
+    border-top: 1px solid rgba(138, 43, 226, 0.3);
+    margin: 20px 0;
+}
+
+/* ==================== Кнопки и формы ==================== */
+.question-btn-wrapper {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.question-btn-wrapper .btn {
+    width: 100%;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #4B0082, #6A0DAD);
+    color: #e0d8f0;
+    border: 1px solid rgba(138, 43, 226, 0.4);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(75, 0, 130, 0.3);
+}
+
+.question-btn-wrapper .btn:hover {
+    background: linear-gradient(135deg, #5A0094, #7B14C4);
+    box-shadow:
+        0 6px 20px rgba(138, 43, 226, 0.4),
+        0 0 30px rgba(138, 43, 226, 0.2);
+    transform: translateY(-2px);
+}
+
+.text-danger {
+    color: #e06070;
+}
+
+.bg-primary {
+    background: linear-gradient(135deg, rgba(75, 0, 130, 0.6), rgba(106, 13, 173, 0.6));
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* ==================== Утилиты ==================== */
+.center {
+    text-align: center;
+}
+
+.ask-more {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.text_block {
+    display: block;
+}
+
+.violet {
+    background-color: #4B0082;
+}
+
+/* ==================== Страница вопроса ==================== */
+.question-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 30px 20px;
+}
+
+.question-form-wrapper {
+    width: 100%;
+    max-width: 500px;
+}
+
+.back-to-decks {
+    display: inline-block;
+    color: #c8a0ff;
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.back-to-decks:hover {
+    color: #e0c0ff;
+}
+
+.question-card {
+    background: linear-gradient(145deg, rgba(21, 24, 33, 0.95), rgba(26, 16, 53, 0.95));
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow:
+        0 8px 32px rgba(138, 43, 226, 0.2),
+        0 0 60px rgba(75, 0, 130, 0.15);
+    animation: fadeIn 0.6s ease-out;
+}
+
+.question-deck-image {
+    width: 220px;
+    height: 330px;
+    margin: 0 auto 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(138, 43, 226, 0.4);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.question-deck-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.deck-label {
+    text-align: center;
+    color: #e8c39e;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* ==================== Главная страница — выбор колод ==================== */
+.index-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.index-title {
+    color: #e8c39e;
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 15px rgba(232, 195, 158, 0.3);
+}
+
+.index-subtitle {
+    color: #a89cc8;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    font-style: italic;
+}
+
+.decks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.deck-card {
+    display: block;
+    background: linear-gradient(145deg, rgba(21, 24, 33, 0.9), rgba(26, 16, 53, 0.9));
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.deck-card:hover {
+    transform: translateY(-5px);
+    box-shadow:
+        0 8px 30px rgba(138, 43, 226, 0.4),
+        0 0 40px rgba(75, 0, 130, 0.2);
+    border-color: rgba(138, 43, 226, 0.6);
+}
+
+.deck-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.deck-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.deck-card:hover .deck-image img {
+    transform: scale(1.05);
+}
+
+.deck-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(75, 0, 130, 0.4), rgba(106, 13, 173, 0.4));
+    font-size: 4rem;
+}
+
+.deck-info {
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.deck-info h3 {
+    color: #e8c39e;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.deck-info p {
+    color: #c8a0ff;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.no-decks {
+    color: #a89cc8;
+    font-size: 1.1rem;
+    font-style: italic;
+    text-align: center;
+}
+
+/* ==================== Markdown рендеринг ==================== */
+    color: #e06070;
+}
+
+.bg-primary {
+    background: linear-gradient(135deg, rgba(75, 0, 130, 0.6), rgba(106, 13, 173, 0.6));
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* ==================== Sticky Footer ==================== */
+.main-content {
+    flex: 1 0 auto;
+    width: 100%;
+}
+
+/* ==================== Футер ==================== */
+footer {
+    flex-shrink: 0;
+    padding: 20px;
+    text-align: center;
+    color: #6a5f85;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(138, 43, 226, 0.2);
+    background: rgba(13, 15, 20, 0.8);
+}
+
+footer .footer-copyright {
+    text-align: center;
+}
+
+/* ==================== Навигация ==================== */
+.navbar {
+    background: rgba(13, 15, 20, 0.95) !important;
+    border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.navbar .nav-link {
+    color: #c8bcd8 !important;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    color: #e8c39e !important;
+}
+>>>>>>> 235e838110e4665b69016b4322617eccf9d9eff6

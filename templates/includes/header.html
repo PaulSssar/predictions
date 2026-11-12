@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% load static %}
   <header style="margin-bottom:10px;">
   <nav class="navbar navbar-light" style="background-color: black; height: 70px; display: flex; align-items: center;">
@@ -17,4 +18,25 @@
       </ul>
     </div>
   </nav>
+=======
+{% load static %}
+  <header style="margin-bottom:10px;">
+  <nav class="navbar navbar-light" style="background-color: black; height: 70px; display: flex; align-items: center;">
+    <div class="container">
+      <ul class="nav nav-pills justify-content-between flex-grow-1">
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'crystal_ball:answer' %}active{% endif %}"
+             href="{% url 'crystal_ball:index' %}">Задать вопрос</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'crystal_ball:all_questions' %}active{% endif %}"
+             href="{% url 'crystal_ball:all_questions' id=request.user.id %}">Все вопросы</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'users:logout' %}">Выйти</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+>>>>>>> 235e838110e4665b69016b4322617eccf9d9eff6
 </header>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 {% load static %}
 {% load markdown_filter %}
@@ -47,3 +48,35 @@
     </div>-->
   </div>
 {% endblock %}
+=======
+{% extends 'base.html' %}
+{% load static %}
+{% load markdown_filter %}
+  {% block title %}
+    Ответ
+  {%  endblock %}
+  {% block content %}
+    <div class="answer-page">
+
+      <div class="ask-more answer-content">
+      <p>
+        <img src="{% static 'img/answer.jpg' %}" width="300" height="450" style="border-radius: 10px;">
+      </p>
+      <p>Вопрос: {{ question.text }}</p>
+      <div class="card-container">
+        {% for card in cards %}
+          <div class="card-item" style="width: 300px; background-color: #ffffff; display: inline-block;">
+            <img class="question" src="{{ card.image.url }}">
+            <p class="cards center">{{ card.name }}</p>
+          </div>
+        {% endfor %}
+      </div>
+      {% if error %}
+        <p class="text-danger">{{ error }}</p>
+      {% else %}
+        <div class="answer-text">{{ answer|render_markdown }}</div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+>>>>>>> 235e838110e4665b69016b4322617eccf9d9eff6
