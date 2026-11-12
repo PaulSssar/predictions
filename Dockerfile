@@ -10,4 +10,11 @@ COPY . /app
 
 WORKDIR /app
 
-#CMD ["python3", "manage.py", "runserver", "0:8000"]
+# Collect static files
+RUN python manage.py collectstatic --noinput
+
+# Expose gunicorn port
+EXPOSE 8000
+
+# Run gunicorn
+CMD ["gunicorn", "--config", "gunicorn.conf.py", "predictions.wsgi:application"]

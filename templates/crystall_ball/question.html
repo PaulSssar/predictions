@@ -1,27 +1,46 @@
 {% extends 'base.html' %}
 {% load static %}
-  {% block title %}
-    Шар предсказаний
-  {%  endblock %}
-  {% block content %}
-    <div class="form-group row my-3 p-3 center">
-    <form method="post" action="" enctype="multipart/form-data">
-      {% csrf_token %}
-      <ul>
-        <li>
-          <img src="{% static 'img/question.jpg' %}" width="300" height="450" style="border-radius: 10px;">
-        </li>
-        <li>
-          <h3>Задать вопрос</h3>
-        </li>
-        <li>
-          {{ form.text }}
-        </li>
-        <li class="question-btn-wrapper">
-          <button type="submit" class="btn btn-primary">
-            Получить ответ
-          </button>
-        </li>
-      </ul>
+
+{% block title %}
+  {% if deck %}{{ deck.name }}{% else %}Шар предсказаний{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="question-page">
+    <div class="question-form-wrapper">
+        {% if deck %}
+        <a href="{% url 'crystal_ball:index' %}" class="back-to-decks">← Выбрать другую колоду</a>
+        {% endif %}
+
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="question-card">
+                {% if deck and deck.image %}
+                <div class="question-deck-image">
+                    <img src="{{ deck.image.url }}" alt="{{ deck.name }}">
+                </div>
+                {% else %}
+                <div class="question-deck-image">
+                    <img src="{% static 'img/question.jpg' %}" alt="Вопрос">
+                </div>
+                {% endif %}
+
+                <h3>Задать вопрос</h3>
+                {% if deck %}
+                <p class="deck-label">Колода: {{ deck.name }}</p>
+                {% endif %}
+
+                <div class="form-group">
+                    {{ form.text }}
+                </div>
+
+                <div class="question-btn-wrapper">
+                    <button type="submit" class="btn btn-primary">
+                        Получить ответ
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
-  {%  endblock %}
+</div>
+{% endblock %}

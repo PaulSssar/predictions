@@ -454,25 +454,7 @@ a:hover {
     margin: 20px 0;
 }
 
-/* ==================== Утилиты ==================== */
-.center {
-    text-align: center;
-}
-
-.ask-more {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.text_block {
-    display: block;
-}
-
-.violet {
-    background-color: #4B0082;
-}
-
-/* ==================== Страница вопроса ==================== */
+/* ==================== Кнопки и формы ==================== */
 .question-btn-wrapper {
     margin-top: 25px;
     margin-bottom: 10px;
@@ -502,6 +484,200 @@ a:hover {
 }
 
 .text-danger {
+    color: #e06070;
+}
+
+.bg-primary {
+    background: linear-gradient(135deg, rgba(75, 0, 130, 0.6), rgba(106, 13, 173, 0.6));
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* ==================== Утилиты ==================== */
+.center {
+    text-align: center;
+}
+
+.ask-more {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.text_block {
+    display: block;
+}
+
+.violet {
+    background-color: #4B0082;
+}
+
+/* ==================== Страница вопроса ==================== */
+.question-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 30px 20px;
+}
+
+.question-form-wrapper {
+    width: 100%;
+    max-width: 500px;
+}
+
+.back-to-decks {
+    display: inline-block;
+    color: #c8a0ff;
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.back-to-decks:hover {
+    color: #e0c0ff;
+}
+
+.question-card {
+    background: linear-gradient(145deg, rgba(21, 24, 33, 0.95), rgba(26, 16, 53, 0.95));
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow:
+        0 8px 32px rgba(138, 43, 226, 0.2),
+        0 0 60px rgba(75, 0, 130, 0.15);
+    animation: fadeIn 0.6s ease-out;
+}
+
+.question-deck-image {
+    width: 220px;
+    height: 330px;
+    margin: 0 auto 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(138, 43, 226, 0.4);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.question-deck-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.deck-label {
+    text-align: center;
+    color: #e8c39e;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* ==================== Главная страница — выбор колод ==================== */
+.index-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.index-title {
+    color: #e8c39e;
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 15px rgba(232, 195, 158, 0.3);
+}
+
+.index-subtitle {
+    color: #a89cc8;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    font-style: italic;
+}
+
+.decks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.deck-card {
+    display: block;
+    background: linear-gradient(145deg, rgba(21, 24, 33, 0.9), rgba(26, 16, 53, 0.9));
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.deck-card:hover {
+    transform: translateY(-5px);
+    box-shadow:
+        0 8px 30px rgba(138, 43, 226, 0.4),
+        0 0 40px rgba(75, 0, 130, 0.2);
+    border-color: rgba(138, 43, 226, 0.6);
+}
+
+.deck-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.deck-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.deck-card:hover .deck-image img {
+    transform: scale(1.05);
+}
+
+.deck-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(75, 0, 130, 0.4), rgba(106, 13, 173, 0.4));
+    font-size: 4rem;
+}
+
+.deck-info {
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.deck-info h3 {
+    color: #e8c39e;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.deck-info p {
+    color: #c8a0ff;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.no-decks {
+    color: #a89cc8;
+    font-size: 1.1rem;
+    font-style: italic;
+    text-align: center;
+}
+
+/* ==================== Markdown рендеринг ==================== */
     color: #e06070;
 }
 

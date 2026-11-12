@@ -1,6 +1,6 @@
 from django.db import models
-from .question import Question
-
+from crystall_ball.models.question import Question
+from crystall_ball.models.category_deck import CategoryDeck
 
 class Answer(models.Model):
     """Ответ на гадание. Хранит интерпретацию, сгенерированную GigaChat."""
@@ -14,6 +14,13 @@ class Answer(models.Model):
     )
     text = models.TextField(
         'Ответ',
+    )
+    category_deck = models.ForeignKey(
+        CategoryDeck,
+        verbose_name='Категория колоды',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
     )
 
     def __str__(self):

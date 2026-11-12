@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Выбор колоды{% endblock %}
+
+{% block content %}
+<div class="index-page">
+    <h1 class="index-title">Выберите колоду</h1>
+    <p class="index-subtitle">Каждая колода хранит свою историю и энергию</p>
+
+    <div class="decks-grid">
+        {% for deck in decks %}
+        <a href="{% url 'crystal_ball:question' deck.slug %}" class="deck-card">
+            {% if deck.image %}
+            <div class="deck-image">
+                <img src="{{ deck.image.url }}" alt="{{ deck.name }}">
+            </div>
+            {% else %}
+            <div class="deck-image deck-image-placeholder">
+                <span>🔮</span>
+            </div>
+            {% endif %}
+            <div class="deck-info">
+                <h3>{{ deck.name }}</h3>
+                <p>Гадать →</p>
+            </div>
+        </a>
+        {% empty %}
+        <p class="no-decks">Колоды пока нет. Создайте первую!</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

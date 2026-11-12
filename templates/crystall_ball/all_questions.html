@@ -6,7 +6,7 @@
       {% for question in all_questions %}
         <p>{{ question.text }}</p>
       {% endfor %}
-      <a class="btn btn-primary" href="{% url 'crystal_ball:question' %}">
+      <a class="btn btn-primary" href="{% url 'crystal_ball:index' %}">
         Задать еще вопрос
       </a>
     </div>
