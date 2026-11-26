@@ -97,6 +97,16 @@ def _generate_interpretation(
     raise GigaChatUnavailable("Unexpected: exhausted retries without raising")
 
 
+def _draw_cards() -> list[str]:
+    """Выбирает 3 случайные карты из базы."""
+    from django.db import connection
+    from crystall_ball.models.cards import Cards
+
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT name FROM crystall_ball_cards ORDER BY RANDOM() LIMIT 3")
+        return [row[0] for row in cursor.fetchall()]
+
+
 def create_reading(
     *, card_names: list[str], question: str, request_id: str | None = None
 ) -> ReadingResult:
@@ -120,6 +130,37 @@ def create_reading(
 
     if len(card_names) != 3:
         raise ValueError("Expected exactly 3 card names")
+
+    interpretation = _generate_interpretation(card_names, question, request_id)
+
+    return ReadingResult(
+        text=interpretation,
+        card_names=card_names,
+    )
+
+
+def create_reading_by_telegram(
+    *, telegram_id: int, question: str, request_id: str | None = None
+) -> ReadingResult:
+    """Создаёт расклад для пользователя Telegram.
+
+    Args:
+        telegram_id: ID пользователя Telegram.
+        question: Вопрос пользователя.
+        request_id: Опциональный ID запроса для логирования.
+
+    Returns:
+        ReadingResult с текстом трактовки и названиями карт.
+
+    Raises:
+        GigaChatTimeout: При таймауте запроса.
+        GigaChatBadResponse: При некорректном ответе.
+        GigaChatUnavailable: При сетевой ошибке.
+    """
+    if request_id is None:
+        request_id = os.urandom(16).hex()
+
+    card_names = _draw_cards()
 
     interpretation = _generate_interpretation(card_names, question, request_id)
 
